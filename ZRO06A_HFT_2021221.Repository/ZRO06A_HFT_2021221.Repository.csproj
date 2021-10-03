@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ZRO06A_HFT_2021221.Data\ZRO06A_HFT_2021221.Data.csproj" />
+      <ProjectReference Include="..\ZRO06A_HFT_2021221.Models\ZRO06A_HFT_2021221.Models.csproj" />
+    </ItemGroup>
+
+</Project>
