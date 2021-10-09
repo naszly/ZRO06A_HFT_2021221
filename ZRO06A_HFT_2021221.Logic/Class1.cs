@@ -2,5 +2,8 @@
 
 namespace ZRO06A_HFT_2021221.Logic
 {
-   public class Class1 { }
+   public class Class1
+   {
+      
+   }
 }
