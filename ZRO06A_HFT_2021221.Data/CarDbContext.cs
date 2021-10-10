@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Versioning;
 using Microsoft.EntityFrameworkCore;
 
 namespace ZRO06A_HFT_2021221.Data
@@ -42,7 +41,7 @@ namespace ZRO06A_HFT_2021221.Data
                   // must close the collection otherwise can not copy data
                   // data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\CarDb.mdf;integrated security=True;MultipleActiveResultSets=True
                   UseSqlServer(
-                     @"data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\CarDb.mdf;integrated security=True;MultipleActiveResultSets=True");
+                     @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\CarDb.mdf;Integrated Security=True");
             }
          }
       }
