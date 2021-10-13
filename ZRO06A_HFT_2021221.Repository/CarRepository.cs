@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ZRO06A_HFT_2021221.Data;
+using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Repository
 {

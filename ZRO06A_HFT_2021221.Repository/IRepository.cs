@@ -1,5 +1,6 @@
 using System.Linq;
 using ZRO06A_HFT_2021221.Data;
+using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Repository
 {

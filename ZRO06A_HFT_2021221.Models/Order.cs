@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ZRO06A_HFT_2021221.Data
+namespace ZRO06A_HFT_2021221.Models
 {
    [Table("orders")]
    public class Order
