@@ -7,9 +7,8 @@ namespace ZRO06A_HFT_2021221.Data
    {
       // Tables
       public DbSet<Brand> Brand { get; set; }
-
       public DbSet<Car> Cars { get; set; }
-      //public DbSet<Order> Orders { get; set; }
+      public DbSet<Order> Orders { get; set; }
 
       public CarDbContext()
       {
@@ -67,13 +66,13 @@ namespace ZRO06A_HFT_2021221.Data
          Car audi1 = new Car() { Id = 5, BrandId = audi.Id, BasePrice = 20000, Model = "Audi A3" };
          Car audi2 = new Car() { Id = 6, BrandId = audi.Id, BasePrice = 25000, Model = "Audi A4" };
 
-         /*Order o1 = new Order() { Id = 1, Name = "Roderick Myers", CarId = 2 };
+         Order o1 = new Order() { Id = 1, Name = "Roderick Myers", CarId = 2 };
          Order o2 = new Order() { Id = 2, Name = "Matthew Clayton", CarId = 5 };
-         Order o3 = new Order() { Id = 3, Name = "Bernadette Valée", CarId = 3 };*/
+         Order o3 = new Order() { Id = 3, Name = "Bernadette Valée", CarId = 3 };
 
          modelBuilder.Entity<Brand>().HasData(bmw, citroen, audi);
          modelBuilder.Entity<Car>().HasData(bmw1, bmw2, citroen1, citroen2, audi1, audi2);
-         //modelBuilder.Entity<Order>().HasData(o1, o2, o3);
+         modelBuilder.Entity<Order>().HasData(o1, o2, o3);
       }
    }
 }

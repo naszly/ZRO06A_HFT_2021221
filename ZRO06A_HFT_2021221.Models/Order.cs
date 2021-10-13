@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ZRO06A_HFT_2021221.Data
-{/*
+{
    [Table("orders")]
    public class Order
    {
@@ -20,5 +20,5 @@ namespace ZRO06A_HFT_2021221.Data
       [ForeignKey(nameof(Car))] public int CarId { get; set; }
 
       public Order() { }
-   }*/
+   }
 }
