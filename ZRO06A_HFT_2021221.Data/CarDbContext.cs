@@ -1,10 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Data
 {
-   public class CarDbContext : DbContext
+   public abstract class CarDbContext : DbContext
    {
       // Tables
       public DbSet<Brand> Brand { get; set; }
@@ -14,37 +16,46 @@ namespace ZRO06A_HFT_2021221.Data
       public CarDbContext()
       {
          // creating the necessary elements to get the database
+         this.Database.EnsureDeleted();
          this.Database.EnsureCreated();
+         /*RelationalDatabaseCreator databaseCreator = (RelationalDatabaseCreator)Database.GetService<IDatabaseCreator>();
+         databaseCreator.CreateTables();*/
       }
 
       public CarDbContext(DbContextOptions<CarDbContext> options)
          : base(options) { }
 
+      protected abstract void OnConfiguringImp(DbContextOptionsBuilder optionsBuilder);
+
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
-         if (!optionsBuilder.IsConfigured)
-         {
-            if (OperatingSystem.IsLinux()) 
-            {
-               optionsBuilder.UseLazyLoadingProxies().
-                  UseSqlServer(
-                     "Data Source=tcp:localhost;" +
-                     // "User Instance=true;" +
-                     "User Id=sa;" + 
-                     "Password=<YourStrong@Passw0rd>;" 
-                  );
-            }
-            else
-            {
-               optionsBuilder.UseLazyLoadingProxies().
-                  // |DataDirectory| 
-                  // must close the collection otherwise can not copy data
-                  // data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\CarDb.mdf;integrated security=True;MultipleActiveResultSets=True
-                  UseSqlServer(
-                     @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\CarDb.mdf;Integrated Security=True");
-            }
-         }
+         OnConfiguringImp(optionsBuilder);
       }
+      /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+      {
+         if (optionsBuilder.IsConfigured) return;
+         
+         if (OperatingSystem.IsLinux()) 
+         {
+            optionsBuilder.UseLazyLoadingProxies().
+               UseSqlServer(
+                  "Data Source=tcp:localhost;" +
+                  // "User Instance=true;" +
+                  "Initial catalog=EFDB;" +
+                  "User Id=sa;" + 
+                  "Password=<YourStrong@Passw0rd>;" 
+               );
+         }
+         else
+         {
+            optionsBuilder.UseLazyLoadingProxies().
+               // |DataDirectory| 
+               // must close the collection otherwise can not copy data
+               // data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\CarDb.mdf;integrated security=True;MultipleActiveResultSets=True
+               UseSqlServer(
+                  @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\CarDb.mdf;Integrated Security=True");
+         }
+      }*/
       
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {

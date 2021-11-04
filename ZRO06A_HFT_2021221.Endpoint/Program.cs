@@ -16,7 +16,15 @@ namespace ZRO06A_HFT_2021221.Endpoint
    {
       public static void Main(string[] args)
       {
-         DbContext ctx = new CarDbContext();
+         DbContext ctx;
+         if (OperatingSystem.IsWindows())
+         {
+            ctx = new LocalDbCarDbContext(); // TODO: test on windows
+         }
+         else
+         {
+            ctx = new MsSqlCarDbContext();
+         }
          var carRepository = new CarRepository(ctx);
 
          CreateHostBuilder(args).Build().Run();
