@@ -5,7 +5,7 @@ using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Repository
 {
-   class OrderRepository : Repository<Order>
+   public class OrderRepository : Repository<Order>
    {
       public OrderRepository(DbContext ctx) : base(ctx) { }
       public override void Create(Order item)
