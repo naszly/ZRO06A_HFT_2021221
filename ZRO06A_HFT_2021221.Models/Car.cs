@@ -36,6 +36,7 @@ namespace ZRO06A_HFT_2021221.Models
       // Proxy class
       // Lazy loading
       [NotMapped] public virtual Brand Brand { get; set; }
+      [NotMapped] public virtual Order Order { get; set; }
 
       [ForeignKey(nameof(Brand))] public int BrandId { get; set; }
    }

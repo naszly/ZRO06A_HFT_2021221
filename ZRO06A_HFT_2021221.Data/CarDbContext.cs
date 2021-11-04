@@ -66,6 +66,14 @@ namespace ZRO06A_HFT_2021221.Data
                .HasForeignKey(car => car.BrandId)
                .OnDelete(DeleteBehavior.ClientSetNull);
          });
+         
+         modelBuilder.Entity<Order>(entity =>
+         {
+            entity.HasOne(order => order.Car)
+               .WithOne(car => car.Order)
+               .HasForeignKey<Order>(order => order.CarId)
+               .OnDelete(DeleteBehavior.ClientSetNull);
+         });
          // Part 1
          Brand bmw = new Brand() { Id = 1, Name = "BMW" };
          Brand citroen = new Brand() { Id = 2, Name = "Citroen" };
