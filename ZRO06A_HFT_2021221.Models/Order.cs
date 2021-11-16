@@ -14,7 +14,9 @@ namespace ZRO06A_HFT_2021221.Models
       [Column(TypeName="Date")]
       [Required]
       public DateTime Date { get; set; }
-      
+
+      [Required]
+      public int Price { get; set; }
 
       // Proxy class
       // Lazy loading

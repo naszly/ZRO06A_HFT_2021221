@@ -16,5 +16,9 @@ namespace ZRO06A_HFT_2021221.Models
       
       [NotMapped] public virtual ICollection<Order> Orders { get; set; }
 
+      public Customer()
+      {
+         Orders = new HashSet<Order>();
+      }
    }
 }

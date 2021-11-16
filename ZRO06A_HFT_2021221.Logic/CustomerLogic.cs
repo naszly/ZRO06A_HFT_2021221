@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ZRO06A_HFT_2021221.Models;
 using ZRO06A_HFT_2021221.Repository;
 
@@ -53,6 +54,16 @@ namespace ZRO06A_HFT_2021221.Logic
             throw new KeyNotFoundException("Cannot get car with id: " + item.Id);
          
          repository.Update(item);
+      }
+
+      public int GetPaidSum(int id)
+      {
+         return GetOne(id).Orders.Sum(x => x.Price);
+      }
+
+      public Order GetLastOrder(int id)
+      {
+         return GetOne(id).Orders.OrderByDescending(x => x.Date).SingleOrDefault();
       }
    }
 }
