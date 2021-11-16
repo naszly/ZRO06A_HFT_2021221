@@ -5,7 +5,7 @@ using ZRO06A_HFT_2021221.Repository;
 
 namespace ZRO06A_HFT_2021221.Logic
 {
-   class CarLogic : ICarLogic
+   public class CarLogic : ICarLogic
    {
       private readonly ICarRepository repository;
 
@@ -16,8 +16,12 @@ namespace ZRO06A_HFT_2021221.Logic
       
       public void Create(Car item)
       {
-         if (item is null) throw new ArgumentNullException(nameof(item));
-         if (item.BasePrice < 0) throw new ArgumentException("Car price cannot be negative");
+         if (item is null)
+            throw new ArgumentNullException(nameof(item));
+         if (item.BasePrice < 0)
+            throw new ArgumentException("Car price cannot be negative");
+         if (item.Model is null || item.Model.Equals(string.Empty))
+            throw new ArgumentException("Car model is required");
          
          repository.Create(item);
       }
@@ -30,7 +34,9 @@ namespace ZRO06A_HFT_2021221.Logic
       public Car GetOne(int id)
       {
          Car item = repository.GetOne(id);
-         if (item is null) throw new KeyNotFoundException("Cannot get car with id: " + id);
+         if (item is null)
+            throw new KeyNotFoundException("Cannot get car with id: " + id);
+         
          return item;
       }
 
@@ -41,9 +47,14 @@ namespace ZRO06A_HFT_2021221.Logic
 
       public void Update(Car item)
       {
-         if (item is null) throw new ArgumentNullException(nameof(item));
-         if (item.BasePrice < 0) throw new ArgumentException("Car price cannot be negative");
-         if (repository.GetOne(item.Id) is null) throw new KeyNotFoundException("Cannot get car with id: " + item.Id);
+         if (item is null)
+            throw new ArgumentNullException(nameof(item));
+         if (item.BasePrice < 0)
+            throw new ArgumentException("Car price cannot be negative");
+         if (item.Model is null || item.Model.Equals(string.Empty))
+            throw new ArgumentException("Car model is required");
+         if (repository.GetOne(item.Id) is null)
+            throw new KeyNotFoundException("Cannot get car with id: " + item.Id);
          
          repository.Update(item);
       }
