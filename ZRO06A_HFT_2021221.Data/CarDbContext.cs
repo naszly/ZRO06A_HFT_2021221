@@ -1,7 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Data
@@ -12,14 +10,13 @@ namespace ZRO06A_HFT_2021221.Data
       public DbSet<Brand> Brand { get; set; }
       public DbSet<Car> Cars { get; set; }
       public DbSet<Order> Orders { get; set; }
+      public DbSet<Customer> Customers { get; set; }
 
       public CarDbContext()
       {
          // creating the necessary elements to get the database
          this.Database.EnsureDeleted();
          this.Database.EnsureCreated();
-         /*RelationalDatabaseCreator databaseCreator = (RelationalDatabaseCreator)Database.GetService<IDatabaseCreator>();
-         databaseCreator.CreateTables();*/
       }
 
       public CarDbContext(DbContextOptions<CarDbContext> options)
@@ -31,31 +28,6 @@ namespace ZRO06A_HFT_2021221.Data
       {
          OnConfiguringImp(optionsBuilder);
       }
-      /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      {
-         if (optionsBuilder.IsConfigured) return;
-         
-         if (OperatingSystem.IsLinux()) 
-         {
-            optionsBuilder.UseLazyLoadingProxies().
-               UseSqlServer(
-                  "Data Source=tcp:localhost;" +
-                  // "User Instance=true;" +
-                  "Initial catalog=EFDB;" +
-                  "User Id=sa;" + 
-                  "Password=<YourStrong@Passw0rd>;" 
-               );
-         }
-         else
-         {
-            optionsBuilder.UseLazyLoadingProxies().
-               // |DataDirectory| 
-               // must close the collection otherwise can not copy data
-               // data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\CarDb.mdf;integrated security=True;MultipleActiveResultSets=True
-               UseSqlServer(
-                  @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\CarDb.mdf;Integrated Security=True");
-         }
-      }*/
       
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
@@ -74,6 +46,15 @@ namespace ZRO06A_HFT_2021221.Data
                .HasForeignKey<Order>(order => order.CarId)
                .OnDelete(DeleteBehavior.ClientSetNull);
          });
+         
+         modelBuilder.Entity<Order>(entity =>
+         {
+            entity.HasOne(order => order.Customer)
+               .WithMany(customer => customer.Orders)
+               .HasForeignKey(order => order.CustomerId)
+               .OnDelete(DeleteBehavior.ClientSetNull);
+         });
+         
          // Part 1
          Brand bmw = new Brand() { Id = 1, Name = "BMW" };
          Brand citroen = new Brand() { Id = 2, Name = "Citroen" };
@@ -86,12 +67,17 @@ namespace ZRO06A_HFT_2021221.Data
          Car audi1 = new Car() { Id = 5, BrandId = audi.Id, BasePrice = 20000, Model = "Audi A3" };
          Car audi2 = new Car() { Id = 6, BrandId = audi.Id, BasePrice = 25000, Model = "Audi A4" };
 
-         Order o1 = new Order() { Id = 1, Name = "Roderick Myers", CarId = 2 };
-         Order o2 = new Order() { Id = 2, Name = "Matthew Clayton", CarId = 5 };
-         Order o3 = new Order() { Id = 3, Name = "Bernadette Valée", CarId = 3 };
-
+         Customer c1 = new Customer() { Id = 1, Name = "Roderick Myers" };
+         Customer c2 = new Customer() { Id = 2, Name = "Matthew Clayton" };
+         Customer c3 = new Customer() { Id = 3, Name = "Bernadette Valée" };
+         
+         Order o1 = new Order() { Id = 1, CustomerId = 1, CarId = 2, Date = new DateTime(2021, 11, 16) };
+         Order o2 = new Order() { Id = 2, CustomerId = 1, CarId = 5, Date = new DateTime(2021, 11, 16) };
+         Order o3 = new Order() { Id = 3, CustomerId = 3, CarId = 3, Date = new DateTime(2021, 11, 18) };
+         
          modelBuilder.Entity<Brand>().HasData(bmw, citroen, audi);
          modelBuilder.Entity<Car>().HasData(bmw1, bmw2, citroen1, citroen2, audi1, audi2);
+         modelBuilder.Entity<Customer>().HasData(c1, c2, c3);
          modelBuilder.Entity<Order>().HasData(o1, o2, o3);
       }
    }

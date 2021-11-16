@@ -23,7 +23,7 @@ namespace ZRO06A_HFT_2021221.Repository
       public override void Update(Order item)
       {
          Order oldOrder = GetOne(item.Id);
-         oldOrder.Name = item.Name;
+         oldOrder.CustomerId = item.CustomerId;
          oldOrder.CarId = item.CarId;
          ctx.SaveChanges();
       }
