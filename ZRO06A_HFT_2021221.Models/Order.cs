@@ -12,6 +12,7 @@ namespace ZRO06A_HFT_2021221.Models
       public int Id { get; set; }
       
       [Column(TypeName="Date")]
+      [Required]
       public DateTime Date { get; set; }
       
 
