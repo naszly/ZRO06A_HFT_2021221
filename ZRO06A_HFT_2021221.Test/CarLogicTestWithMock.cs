@@ -9,17 +9,22 @@ using ZRO06A_HFT_2021221.Repository;
 namespace ZRO06A_HFT_2021221.Test
 {
    [TestFixture]
-   public class LogicTestWithMock
+   public class CarLogicTestWithMock
    {
       private readonly CarLogic carLogic;
 
-      public LogicTestWithMock()
+      public CarLogicTestWithMock()
       {
          var mockCarRepository = new Mock<ICarRepository>();
          
-         var fakeBrand = new Brand()
+         var fakeBrand1 = new Brand()
          {
             Name = "Audi"
+         };
+         
+         var fakeBrand2 = new Brand()
+         {
+            Name = "Toyota"
          };
 
          mockCarRepository.Setup((t) => t.Create(It.IsAny<Car>()));
@@ -30,34 +35,37 @@ namespace ZRO06A_HFT_2021221.Test
                {
                   Model = "A3",
                   BasePrice = 2000,
-                  Brand = fakeBrand
+                  Brand = fakeBrand1
                },
                new()
                {
                   Model = "A5",
                   BasePrice = 3000,
-                  Brand = fakeBrand
+                  Brand = fakeBrand1
+               },
+               new()
+               {
+                  Model = "A6",
+                  BasePrice = 3400,
+                  Brand = fakeBrand1
+               },
+               new()
+               {
+                  Model = "100",
+                  BasePrice = 1100,
+                  Brand = fakeBrand2
+               },
+               new()
+               {
+                  Model = "200",
+                  BasePrice = 1500,
+                  Brand = fakeBrand2
                }
             }.AsQueryable());
 
          mockCarRepository.Setup((t) => t.GetOne(It.IsAny<int>())).Returns<int>((id) =>
          {
-            var l = new List<Car>()
-            {
-               new()
-               {
-                  Model = "A3",
-                  BasePrice = 2000,
-                  Brand = fakeBrand
-               },
-               new()
-               {
-                  Model = "A5",
-                  BasePrice = 3000,
-                  Brand = fakeBrand
-               }
-            };
-            return l[id - 1];
+            return mockCarRepository.Object.GetAll().SingleOrDefault(x => x.Id == id);
          });
 
          carLogic = new CarLogic(mockCarRepository.Object);
@@ -67,6 +75,20 @@ namespace ZRO06A_HFT_2021221.Test
       public void CreateCarTestNull()
       {
          Assert.That(() => carLogic.Create(null), Throws.ArgumentNullException);
+      }
+
+      [Test]
+      public void CarAveragePriceTest()
+      {
+         Assert.That(carLogic.AveragePrice(), Is.EqualTo(2200));
+      }
+      
+      [Test]
+      public void CarAveragePriceByBrandsTest()
+      {
+         var avgByBrands = carLogic.AveragePriceByBrands().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);;
+         Assert.That(avgByBrands["Audi"], Is.EqualTo(2800));
+         Assert.That(avgByBrands["Toyota"], Is.EqualTo(1300));
       }
       
       [TestCase(-5000, false)]
