@@ -1,6 +1,5 @@
 using System.Linq;
 using ZRO06A_HFT_2021221.Data;
-using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Repository
 {
@@ -12,10 +11,5 @@ namespace ZRO06A_HFT_2021221.Repository
       void Delete(int id);
       void Update(T item);
 
-   }
-
-   public interface ICarRepository : IRepository<Car>
-   {
-      void ChangePrice(int id, int newPrice);
    }
 }

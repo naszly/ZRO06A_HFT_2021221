@@ -5,7 +5,7 @@ using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Repository
 {
-   public class BrandRepository : Repository<Brand>
+   public class BrandRepository : Repository<Brand>, IBrandRepository
    {
       public BrandRepository(DbContext ctx) : base(ctx) { }
       public override void Create(Brand item)
