@@ -31,7 +31,7 @@ namespace ZRO06A_HFT_2021221.Models
 
       [MaxLength(100)] [Required] public string Model { get; set; }
 
-      public int? BasePrice { get; set; }
+      public int BasePrice { get; set; }
 
       // Proxy class
       // Lazy loading
