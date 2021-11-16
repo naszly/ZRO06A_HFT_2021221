@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Xml.XPath;
 using ZRO06A_HFT_2021221.Models;
 using ZRO06A_HFT_2021221.Repository;
 
@@ -8,9 +7,9 @@ namespace ZRO06A_HFT_2021221.Logic
 {
    public class BrandLogic : IBrandLogic
    {
-      private readonly BrandRepository repository;
+      private readonly IBrandRepository repository;
       
-      public BrandLogic(BrandRepository repository)
+      public BrandLogic(IBrandRepository repository)
       {
          this.repository = repository;
       }
