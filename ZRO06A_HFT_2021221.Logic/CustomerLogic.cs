@@ -8,9 +8,9 @@ namespace ZRO06A_HFT_2021221.Logic
 {
    public class CustomerLogic : ICustomerLogic
    {
-      private readonly CustomerRepository repository;
+      private readonly ICustomerRepository repository;
       
-      public CustomerLogic(CustomerRepository repository)
+      public CustomerLogic(ICustomerRepository repository)
       {
          this.repository = repository;
       }
@@ -63,7 +63,7 @@ namespace ZRO06A_HFT_2021221.Logic
 
       public Order GetLastOrder(int id)
       {
-         return GetOne(id).Orders.OrderByDescending(x => x.Date).SingleOrDefault();
+         return GetOne(id).Orders.OrderByDescending(x => x.Date).Take(1).SingleOrDefault();
       }
    }
 }

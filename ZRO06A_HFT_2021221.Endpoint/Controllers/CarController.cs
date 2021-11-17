@@ -27,5 +27,23 @@ namespace ZRO06A_HFT_2021221.Endpoint.Controllers
       {
          return carLogic.GetOne(id);
       }
+      
+      [HttpPost]
+      public void Post([FromBody] Car value)
+      {
+         carLogic.Create(value);
+      }
+      
+      [HttpPut]
+      public void Put([FromBody] Car value)
+      {
+         carLogic.Update(value);
+      }
+      
+      [HttpDelete("{id}")]
+      public void Delete(int id)
+      {
+         carLogic.Delete(id);
+      }
    }
 }

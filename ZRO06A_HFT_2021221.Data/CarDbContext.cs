@@ -71,9 +71,9 @@ namespace ZRO06A_HFT_2021221.Data
          Customer c2 = new Customer() { Id = 2, Name = "Matthew Clayton" };
          Customer c3 = new Customer() { Id = 3, Name = "Bernadette Valée" };
          
-         Order o1 = new Order() { Id = 1, CustomerId = 1, CarId = 2, Date = new DateTime(2021, 11, 16) };
-         Order o2 = new Order() { Id = 2, CustomerId = 1, CarId = 5, Date = new DateTime(2021, 11, 16) };
-         Order o3 = new Order() { Id = 3, CustomerId = 3, CarId = 3, Date = new DateTime(2021, 11, 18) };
+         Order o1 = new Order() { Id = 1, CustomerId = 1, CarId = 2, Date = new DateTime(2021, 11, 16), Price = 30000};
+         Order o2 = new Order() { Id = 2, CustomerId = 1, CarId = 5, Date = new DateTime(2021, 11, 16), Price = 20000};
+         Order o3 = new Order() { Id = 3, CustomerId = 3, CarId = 3, Date = new DateTime(2021, 11, 18), Price = 12000};
          
          modelBuilder.Entity<Brand>().HasData(bmw, citroen, audi);
          modelBuilder.Entity<Car>().HasData(bmw1, bmw2, citroen1, citroen2, audi1, audi2);

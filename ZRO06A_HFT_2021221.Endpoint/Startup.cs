@@ -23,14 +23,14 @@ namespace ZRO06A_HFT_2021221.Endpoint
          services.AddControllers();
 
          services.AddTransient<ICarLogic, CarLogic>();
-         //services.AddTransient<IBrandLogic, BrandLogic>();
-         //services.AddTransient<IOrderLogic, OrderLogic>();
-         //services.AddTransient<ICustomerLogic, CustomerLogic>();
+         services.AddTransient<IBrandLogic, BrandLogic>();
+         services.AddTransient<IOrderLogic, OrderLogic>();
+         services.AddTransient<ICustomerLogic, CustomerLogic>();
          
          services.AddTransient<ICarRepository, CarRepository>();
-         //services.AddTransient<IBrandRepository, BrandRepository>();
-         //services.AddTransient<IOrderRepository, OrderRepository>();
-         //services.AddTransient<ICustomerLogic, CustomerLogic>();
+         services.AddTransient<IBrandRepository, BrandRepository>();
+         services.AddTransient<IOrderRepository, OrderRepository>();
+         services.AddTransient<ICustomerRepository, CustomerRepository>();
          
          if (OperatingSystem.IsWindows())
             services.AddTransient<DbContext, LocalDbCarDbContext>();

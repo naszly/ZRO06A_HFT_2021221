@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ZRO06A_HFT_2021221.Models
 {
@@ -14,7 +15,7 @@ namespace ZRO06A_HFT_2021221.Models
       [MaxLength(100)] [Required] 
       public string Name { get; set; }
       
-      [NotMapped] public virtual ICollection<Order> Orders { get; set; }
+      [NotMapped] [JsonIgnore] public virtual ICollection<Order> Orders { get; set; }
 
       public Customer()
       {
