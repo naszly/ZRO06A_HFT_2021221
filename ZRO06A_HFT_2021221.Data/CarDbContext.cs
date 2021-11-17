@@ -42,8 +42,8 @@ namespace ZRO06A_HFT_2021221.Data
          modelBuilder.Entity<Order>(entity =>
          {
             entity.HasOne(order => order.Car)
-               .WithOne(car => car.Order)
-               .HasForeignKey<Order>(order => order.CarId)
+               .WithMany(car => car.Orders)
+               .HasForeignKey(order => order.CarId)
                .OnDelete(DeleteBehavior.ClientSetNull);
          });
          

@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ZRO06A_HFT_2021221.Models
 {
@@ -35,9 +37,10 @@ namespace ZRO06A_HFT_2021221.Models
 
       // Proxy class
       // Lazy loading
-      [NotMapped] public virtual Brand Brand { get; set; }
-      [NotMapped] public virtual Order Order { get; set; }
-
+      [NotMapped] [JsonIgnore] public virtual Brand Brand { get; set; }
+      
+      [NotMapped] [JsonIgnore] public virtual ICollection<Order> Orders { get; set; }
+      
       [ForeignKey(nameof(Brand))] public int BrandId { get; set; }
    }
 }
