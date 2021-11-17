@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ZRO06A_HFT_2021221.Data;
+using ZRO06A_HFT_2021221.Models;
 using ZRO06A_HFT_2021221.Repository;
 
 namespace ZRO06A_HFT_2021221.Endpoint
@@ -16,17 +17,6 @@ namespace ZRO06A_HFT_2021221.Endpoint
    {
       public static void Main(string[] args)
       {
-         DbContext ctx;
-         if (OperatingSystem.IsWindows())
-         {
-            ctx = new LocalDbCarDbContext(); // TODO: test on windows
-         }
-         else
-         {
-            ctx = new MsSqlCarDbContext();
-         }
-         var carRepository = new CarRepository(ctx);
-
          CreateHostBuilder(args).Build().Run();
       }
 
