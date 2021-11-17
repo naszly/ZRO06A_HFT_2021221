@@ -7,6 +7,7 @@ namespace ZRO06A_HFT_2021221.Repository
    public class CustomerRepository : Repository<Customer>, ICustomerRepository
    {
       public CustomerRepository(DbContext ctx) : base(ctx) { }
+
       public override void Create(Customer item)
       {
          ctx.Add(item);

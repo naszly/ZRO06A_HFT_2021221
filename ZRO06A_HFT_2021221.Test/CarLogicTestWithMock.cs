@@ -16,20 +16,20 @@ namespace ZRO06A_HFT_2021221.Test
       public CarLogicTestWithMock()
       {
          var mockCarRepository = new Mock<ICarRepository>();
-         
-         var fakeBrand1 = new Brand()
+
+         var fakeBrand1 = new Brand
          {
             Name = "Audi"
          };
-         
-         var fakeBrand2 = new Brand()
+
+         var fakeBrand2 = new Brand
          {
             Name = "Toyota"
          };
 
-         mockCarRepository.Setup((t) => t.Create(It.IsAny<Car>()));
-         mockCarRepository.Setup((t) => t.GetAll()).Returns(
-            new List<Car>()
+         mockCarRepository.Setup(t => t.Create(It.IsAny<Car>()));
+         mockCarRepository.Setup(t => t.GetAll()).Returns(
+            new List<Car>
             {
                new()
                {
@@ -63,7 +63,7 @@ namespace ZRO06A_HFT_2021221.Test
                }
             }.AsQueryable());
 
-         mockCarRepository.Setup((t) => t.GetOne(It.IsAny<int>())).Returns<int>((id) =>
+         mockCarRepository.Setup(t => t.GetOne(It.IsAny<int>())).Returns<int>(id =>
          {
             return mockCarRepository.Object.GetAll().SingleOrDefault(x => x.Id == id);
          });
@@ -82,74 +82,66 @@ namespace ZRO06A_HFT_2021221.Test
       {
          Assert.That(carLogic.AveragePrice(), Is.EqualTo(2200));
       }
-      
+
       [Test]
       public void CarAveragePriceByBrandsTest()
       {
-         var avgByBrands = carLogic.AveragePriceByBrands().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);;
+         Dictionary<string, double> avgByBrands =
+            carLogic.AveragePriceByBrands().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+         ;
          Assert.That(avgByBrands["Audi"], Is.EqualTo(2800));
          Assert.That(avgByBrands["Toyota"], Is.EqualTo(1300));
       }
-      
+
       [TestCase(-5000, false)]
       [TestCase(5000, true)]
       public void CreateCarTestPrice(int price, bool result)
       {
          //ACT + ASSERT
          if (result)
-         {
-            Assert.That(() => carLogic.Create(new Car()
+            Assert.That(() => carLogic.Create(new Car
             {
                Model = "Astra",
                BasePrice = price
             }), Throws.Nothing);
-         }
          else
-         {
-            Assert.That(() => carLogic.Create(new Car()
+            Assert.That(() => carLogic.Create(new Car
             {
                Model = "Astra",
                BasePrice = price
             }), Throws.Exception);
-         }
       }
-      
+
       [TestCase("Astra", true)]
       [TestCase("", false)]
       [TestCase(null, false)]
       public void CreateCarTestModel(string model, bool result)
       {
-
          //ACT + ASSERT
          if (result)
-         {
-            Assert.That(() => carLogic.Create(new Car()
+            Assert.That(() => carLogic.Create(new Car
             {
                Model = model,
                BasePrice = 5000
             }), Throws.Nothing);
-         }
          else
-         {
-            Assert.That(() => carLogic.Create(new Car()
+            Assert.That(() => carLogic.Create(new Car
             {
                Model = model,
                BasePrice = 5000
             }), Throws.Exception);
-         }
-
       }
-      
+
       [Test]
       public void UpdateCarTestNull()
       {
          Assert.That(() => carLogic.Update(null), Throws.ArgumentNullException);
       }
-      
+
       [Test]
       public void UpdateNullCarTest()
       {
-         Assert.That(() => carLogic.Update(new Car()
+         Assert.That(() => carLogic.Update(new Car
          {
             Id = 999,
             Model = "Astra",
@@ -163,52 +155,41 @@ namespace ZRO06A_HFT_2021221.Test
       {
          //ACT + ASSERT
          if (result)
-         {
-            Assert.That(() => carLogic.Update(new Car()
+            Assert.That(() => carLogic.Update(new Car
             {
                Id = 1,
                Model = "Astra",
                BasePrice = price
             }), Throws.Nothing);
-         }
          else
-         {
-            Assert.That(() => carLogic.Update(new Car()
+            Assert.That(() => carLogic.Update(new Car
             {
                Id = 1,
                Model = "Astra",
                BasePrice = price
             }), Throws.Exception);
-         }
       }
-      
+
       [TestCase("Astra", true)]
       [TestCase("", false)]
       [TestCase(null, false)]
       public void UpdateCarTestModel(string model, bool result)
       {
-
          //ACT + ASSERT
          if (result)
-         {
-            Assert.That(() => carLogic.Update(new Car()
+            Assert.That(() => carLogic.Update(new Car
             {
                Id = 1,
                Model = model,
                BasePrice = 5000
             }), Throws.Nothing);
-         }
          else
-         {
-            Assert.That(() => carLogic.Create(new Car()
+            Assert.That(() => carLogic.Create(new Car
             {
                Id = 1,
                Model = model,
                BasePrice = 5000
             }), Throws.Exception);
-         }
-
       }
-      
    }
 }

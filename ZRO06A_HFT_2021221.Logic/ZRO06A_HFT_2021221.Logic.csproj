@@ -5,8 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ZRO06A_HFT_2021221.Models\ZRO06A_HFT_2021221.Models.csproj" />
-      <ProjectReference Include="..\ZRO06A_HFT_2021221.Repository\ZRO06A_HFT_2021221.Repository.csproj" />
+        <ProjectReference Include="..\ZRO06A_HFT_2021221.Models\ZRO06A_HFT_2021221.Models.csproj"/>
+        <ProjectReference Include="..\ZRO06A_HFT_2021221.Repository\ZRO06A_HFT_2021221.Repository.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -7,6 +7,13 @@ namespace ZRO06A_HFT_2021221.Models
    [Table("brands")]
    public class Brand
    {
+      // IEnumerable, ICollection, IList, IDictionary
+
+      public Brand()
+      {
+         Cars = new HashSet<Car>();
+      }
+
       [Key]
       [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
       // Part 2
@@ -16,11 +23,5 @@ namespace ZRO06A_HFT_2021221.Models
       [MaxLength(100)] [Required] public string Name { get; set; }
 
       [NotMapped] public virtual ICollection<Car> Cars { get; set; }
-      // IEnumerable, ICollection, IList, IDictionary
-
-      public Brand()
-      {
-         Cars = new HashSet<Car>();
-      }
    }
 }

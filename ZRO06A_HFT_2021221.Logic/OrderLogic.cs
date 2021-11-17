@@ -8,7 +8,7 @@ namespace ZRO06A_HFT_2021221.Logic
    public class OrderLogic : IOrderLogic
    {
       private readonly IOrderRepository repository;
-      
+
       public OrderLogic(IOrderRepository repository)
       {
          this.repository = repository;
@@ -32,7 +32,7 @@ namespace ZRO06A_HFT_2021221.Logic
          Order item = repository.GetOne(id);
          if (item is null)
             throw new KeyNotFoundException("Cannot get order with id: " + id);
-         
+
          return item;
       }
 
@@ -47,7 +47,7 @@ namespace ZRO06A_HFT_2021221.Logic
             throw new ArgumentNullException(nameof(item));
          if (repository.GetOne(item.Id) is null)
             throw new KeyNotFoundException("Cannot get order with id: " + item.Id);
-         
+
          repository.Update(item);
       }
    }

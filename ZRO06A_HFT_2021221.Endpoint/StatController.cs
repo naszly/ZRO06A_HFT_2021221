@@ -17,7 +17,7 @@ namespace ZRO06A_HFT_2021221.Endpoint
          this.carLogic = carLogic;
          this.customerLogic = customerLogic;
       }
-      
+
       // stat/CarAveragePrice
       [HttpGet]
       public double CarAveragePrice()
@@ -31,14 +31,14 @@ namespace ZRO06A_HFT_2021221.Endpoint
       {
          return carLogic.AveragePriceByBrands();
       }
-      
+
       // stat/CustomerPaidSum/id
       [HttpGet("{id}")]
       public double CustomerPaidSum(int id)
       {
          return customerLogic.GetPaidSum(id);
       }
-      
+
       // stat/CustomerLastOrder/id
       [HttpGet("{id}")]
       public Order CustomerLastOrder(int id)

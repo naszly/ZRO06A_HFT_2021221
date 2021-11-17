@@ -9,7 +9,7 @@ namespace ZRO06A_HFT_2021221.Logic
    public class CustomerLogic : ICustomerLogic
    {
       private readonly ICustomerRepository repository;
-      
+
       public CustomerLogic(ICustomerRepository repository)
       {
          this.repository = repository;
@@ -21,7 +21,7 @@ namespace ZRO06A_HFT_2021221.Logic
             throw new ArgumentNullException(nameof(item));
          if (item.Name is null || item.Name.Equals(string.Empty))
             throw new ArgumentException("Customer name is required");
-         
+
          repository.Create(item);
       }
 
@@ -35,7 +35,7 @@ namespace ZRO06A_HFT_2021221.Logic
          Customer item = repository.GetOne(id);
          if (item is null)
             throw new KeyNotFoundException("Cannot get customer with id: " + id);
-         
+
          return item;
       }
 
@@ -52,7 +52,7 @@ namespace ZRO06A_HFT_2021221.Logic
             throw new ArgumentException("Customer name is required");
          if (repository.GetOne(item.Id) is null)
             throw new KeyNotFoundException("Cannot get car with id: " + item.Id);
-         
+
          repository.Update(item);
       }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using ZRO06A_HFT_2021221.Data;
 using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Repository
@@ -9,7 +8,7 @@ namespace ZRO06A_HFT_2021221.Repository
    public class CarRepository :
       Repository<Car>, ICarRepository
    {
-      public CarRepository(DbContext ctx) : base(ctx) {}
+      public CarRepository(DbContext ctx) : base(ctx) { }
 
       public override void Update(Car item)
       {
@@ -39,13 +38,11 @@ namespace ZRO06A_HFT_2021221.Repository
 
       public void ChangePrice(int id, int newPrice)
       {
-         var car = GetOne(id);
+         Car car = GetOne(id);
          if (car == null)
-         {
             throw new InvalidOperationException(
                "Car not found"
             );
-         }
          car.BasePrice = newPrice;
          // Unit of Work pattern ???
          ctx.SaveChanges();

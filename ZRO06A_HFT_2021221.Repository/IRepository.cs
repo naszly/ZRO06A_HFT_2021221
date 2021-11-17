@@ -1,5 +1,4 @@
 using System.Linq;
-using ZRO06A_HFT_2021221.Data;
 
 namespace ZRO06A_HFT_2021221.Repository
 {
@@ -10,6 +9,5 @@ namespace ZRO06A_HFT_2021221.Repository
       void Create(T item);
       void Delete(int id);
       void Update(T item);
-
    }
 }

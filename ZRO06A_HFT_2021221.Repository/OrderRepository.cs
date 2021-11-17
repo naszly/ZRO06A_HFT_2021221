@@ -1,6 +1,5 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-
 using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Repository
@@ -8,6 +7,7 @@ namespace ZRO06A_HFT_2021221.Repository
    public class OrderRepository : Repository<Order>, IOrderRepository
    {
       public OrderRepository(DbContext ctx) : base(ctx) { }
+
       public override void Create(Order item)
       {
          ctx.Add(item);

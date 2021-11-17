@@ -38,9 +38,9 @@ namespace ZRO06A_HFT_2021221.Models
       // Proxy class
       // Lazy loading
       [NotMapped] [JsonIgnore] public virtual Brand Brand { get; set; }
-      
+
       [NotMapped] [JsonIgnore] public virtual ICollection<Order> Orders { get; set; }
-      
+
       [ForeignKey(nameof(Brand))] public int BrandId { get; set; }
    }
 }

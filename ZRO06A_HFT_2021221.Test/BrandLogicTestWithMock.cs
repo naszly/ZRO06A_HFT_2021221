@@ -17,9 +17,9 @@ namespace ZRO06A_HFT_2021221.Test
       {
          var mockBrandRepository = new Mock<IBrandRepository>();
 
-         mockBrandRepository.Setup((t) => t.Create(It.IsAny<Brand>()));
-         mockBrandRepository.Setup((t) => t.GetAll()).Returns(
-            new List<Brand>()
+         mockBrandRepository.Setup(t => t.Create(It.IsAny<Brand>()));
+         mockBrandRepository.Setup(t => t.GetAll()).Returns(
+            new List<Brand>
             {
                new()
                {
@@ -32,8 +32,8 @@ namespace ZRO06A_HFT_2021221.Test
                   Name = "Lada"
                }
             }.AsQueryable());
-         
-         mockBrandRepository.Setup((t) => t.GetOne(It.IsAny<int>())).Returns<int>((id) =>
+
+         mockBrandRepository.Setup(t => t.GetOne(It.IsAny<int>())).Returns<int>(id =>
          {
             return mockBrandRepository.Object.GetAll().SingleOrDefault(x => x.Id == id);
          });
@@ -46,23 +46,17 @@ namespace ZRO06A_HFT_2021221.Test
       [TestCase(null, false)]
       public void CreateBrandTestModel(string name, bool result)
       {
-
          //ACT + ASSERT
          if (result)
-         {
-            Assert.That(() => brandLogic.Create(new Brand()
-            { 
+            Assert.That(() => brandLogic.Create(new Brand
+            {
                Name = name
             }), Throws.Nothing);
-         }
          else
-         {
-            Assert.That(() => brandLogic.Create(new Brand()
+            Assert.That(() => brandLogic.Create(new Brand
             {
                Name = name
             }), Throws.Exception);
-         }
-
       }
 
       [Test]
@@ -70,33 +64,26 @@ namespace ZRO06A_HFT_2021221.Test
       {
          Assert.That(() => brandLogic.Update(null), Throws.ArgumentNullException);
       }
-      
-      
+
+
       [TestCase("Opel", true)]
       [TestCase("", false)]
       [TestCase(null, false)]
       public void UpdateCarTestModel(string name, bool result)
       {
-         ;
          //ACT + ASSERT
          if (result)
-         {
-            Assert.That(() => brandLogic.Update(new Brand()
+            Assert.That(() => brandLogic.Update(new Brand
             {
                Id = 1,
                Name = name
             }), Throws.Nothing);
-         }
          else
-         {
-            Assert.That(() => brandLogic.Create(new Brand()
+            Assert.That(() => brandLogic.Create(new Brand
             {
                Id = 1,
                Name = name
             }), Throws.Exception);
-         }
-
       }
-
    }
 }

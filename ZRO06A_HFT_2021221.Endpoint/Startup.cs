@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,12 +22,12 @@ namespace ZRO06A_HFT_2021221.Endpoint
          services.AddTransient<IBrandLogic, BrandLogic>();
          services.AddTransient<IOrderLogic, OrderLogic>();
          services.AddTransient<ICustomerLogic, CustomerLogic>();
-         
+
          services.AddTransient<ICarRepository, CarRepository>();
          services.AddTransient<IBrandRepository, BrandRepository>();
          services.AddTransient<IOrderRepository, OrderRepository>();
          services.AddTransient<ICustomerRepository, CustomerRepository>();
-         
+
          if (OperatingSystem.IsWindows())
             services.AddTransient<DbContext, LocalDbCarDbContext>();
          else
@@ -41,10 +37,7 @@ namespace ZRO06A_HFT_2021221.Endpoint
       // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
       public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
       {
-         if (env.IsDevelopment())
-         {
-            app.UseDeveloperExceptionPage();
-         }
+         if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
          app.UseRouting();
 
