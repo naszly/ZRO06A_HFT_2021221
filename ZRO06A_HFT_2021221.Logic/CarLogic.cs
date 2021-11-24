@@ -74,6 +74,35 @@ namespace ZRO06A_HFT_2021221.Logic
             );
       }
 
+      public int SumSoldPrice()
+      {
+         return repository.GetAll().ToArray().Select(x => x.Orders.Sum(y => y.Price)).Sum();
+      }
+
+      public int SumSoldPrice(int id)
+      {
+         return repository.GetOne(id).Orders.Sum(x => x.Price);
+      }
+
+      public int CountSold()
+      {
+         return repository.GetAll().ToArray().Select(x => x.Orders.Count).Sum();
+      }
+
+      public int CountSold(int id)
+      {
+         return repository.GetOne(id).Orders.Count;
+      }
+      
+      public IEnumerable<KeyValuePair<string, double>> CountSoldByBrands()
+      {
+         return repository.GetAll().ToArray()
+            .GroupBy(x => x.Brand.Name)
+            .Select(g =>
+               new KeyValuePair<string, double>(g.Key, g.Sum(x=>x.Orders.Count))
+            ); 
+      }
+
       public void ChangePrice(int id, int newPrice)
       {
          if (newPrice < 0)

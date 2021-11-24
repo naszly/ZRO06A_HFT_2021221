@@ -65,5 +65,13 @@ namespace ZRO06A_HFT_2021221.Logic
       {
          return GetOne(id).Orders.OrderByDescending(x => x.Date).Take(1).SingleOrDefault();
       }
+
+      public string FavoriteBrand(int id)
+      {
+         return GetOne(id).Orders.GroupBy(x => x.Car.Brand.Name)
+            .Select(g => new KeyValuePair<string, int>(g.Key, g.Count()))
+            .OrderByDescending(x => x.Value)
+            .FirstOrDefault().Key;
+      }
    }
 }

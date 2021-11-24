@@ -24,6 +24,27 @@ namespace ZRO06A_HFT_2021221.Endpoint
       {
          return carLogic.AveragePrice();
       }
+      
+      // stat/SumSoldCarPrices
+      [HttpGet]
+      public double SumSoldCarPrices()
+      {
+         return carLogic.SumSoldPrice();
+      }
+      
+      // stat/CountSoldCars
+      [HttpGet]
+      public double CountSoldCars()
+      {
+         return carLogic.CountSold();
+      }
+      
+      // stat/CountSoldCarsByBrand
+      [HttpGet]
+      public IEnumerable<KeyValuePair<string, double>> CountSoldCarsByBrand()
+      {
+         return carLogic.CountSoldByBrands();
+      }
 
       // stat/CarAveragePriceByBrands
       [HttpGet]

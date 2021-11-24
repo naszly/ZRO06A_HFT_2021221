@@ -7,5 +7,7 @@ namespace ZRO06A_HFT_2021221.Logic
       public int GetPaidSum(int id);
 
       public Order GetLastOrder(int id);
+
+      public string FavoriteBrand(int id);
    }
 }
