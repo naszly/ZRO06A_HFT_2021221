@@ -9,7 +9,6 @@ namespace ZRO06A_HFT_2021221.Data
       public CarDbContext()
       {
          // creating the necessary elements to get the database
-         Database.EnsureDeleted();
          Database.EnsureCreated();
       }
 
