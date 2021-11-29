@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using ConsoleTools;
 using ZRO06A_HFT_2021221.Models;
 
@@ -152,7 +154,11 @@ namespace ZRO06A_HFT_2021221.Client
       {
          Console.Clear();
          Console.WriteLine("*** BEGIN " + str);
-         var serializerOptions = new JsonSerializerOptions { WriteIndented = true };
+         var serializerOptions = new JsonSerializerOptions
+         {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            WriteIndented = true
+         };
          Console.WriteLine(JsonSerializer.Serialize(
             input,
             serializerOptions)
