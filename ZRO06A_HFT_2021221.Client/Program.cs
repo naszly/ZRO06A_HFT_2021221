@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Channels;
 using ConsoleTools;
 using ZRO06A_HFT_2021221.Models;
 
@@ -13,14 +12,13 @@ namespace ZRO06A_HFT_2021221.Client
    {
       private static void Main(string[] args)
       {
-         Thread.Sleep(10000);
-         RestService restService = new RestService("http://localhost:5000");
+         var restService = new RestService("http://localhost:5000");
 
-         var carMenu = new ConsoleMenu(args, level: 1)
+         ConsoleMenu carMenu = new ConsoleMenu(args, 1)
             .Add("GetAll", () => restService.Get<Car>("car").ToConsole("Cars"))
             .Add("Get", () => restService.Get<Car>(ReadInt(), "car").ToConsole("Car"))
-            .Add("Create", () => restService.Post(createObject<Car>(false), "car"))
-            .Add("Update", () => restService.Put(createObject<Car>(true), "car"))
+            .Add("Create", () => restService.Post(CreateObject<Car>(false), "car"))
+            .Add("Update", () => restService.Put(CreateObject<Car>(true), "car"))
             .Add("Delete", () => restService.Delete(ReadInt(), "car"))
             .Add("Back", ConsoleMenu.Close)
             .Configure(config =>
@@ -32,11 +30,11 @@ namespace ZRO06A_HFT_2021221.Client
                config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
             });
 
-         var brandMenu = new ConsoleMenu(args, level: 1)
+         ConsoleMenu brandMenu = new ConsoleMenu(args, 1)
             .Add("GetAll", () => restService.Get<Brand>("brand").ToConsole("Brands"))
             .Add("Get", () => restService.Get<Brand>(ReadInt(), "brand").ToConsole("Brand"))
-            .Add("Create", () => restService.Post(createObject<Brand>(false), "brand"))
-            .Add("Update", () => restService.Put(createObject<Brand>(true), "brand"))
+            .Add("Create", () => restService.Post(CreateObject<Brand>(false), "brand"))
+            .Add("Update", () => restService.Put(CreateObject<Brand>(true), "brand"))
             .Add("Delete", () => restService.Delete(ReadInt(), "brand"))
             .Add("Back", ConsoleMenu.Close)
             .Configure(config =>
@@ -48,11 +46,11 @@ namespace ZRO06A_HFT_2021221.Client
                config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
             });
 
-         var customerMenu = new ConsoleMenu(args, level: 1)
+         ConsoleMenu customerMenu = new ConsoleMenu(args, 1)
             .Add("GetAll", () => restService.Get<Customer>("customer").ToConsole("Customers"))
             .Add("Get", () => restService.Get<Customer>(ReadInt(), "customer").ToConsole("Customer"))
-            .Add("Create", () => restService.Post(createObject<Customer>(false), "customer"))
-            .Add("Update", () => restService.Put(createObject<Customer>(true), "customer"))
+            .Add("Create", () => restService.Post(CreateObject<Customer>(false), "customer"))
+            .Add("Update", () => restService.Put(CreateObject<Customer>(true), "customer"))
             .Add("Delete", () => restService.Delete(ReadInt(), "customer"))
             .Add("Back", ConsoleMenu.Close)
             .Configure(config =>
@@ -64,11 +62,11 @@ namespace ZRO06A_HFT_2021221.Client
                config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
             });
 
-         var orderMenu = new ConsoleMenu(args, level: 1)
+         ConsoleMenu orderMenu = new ConsoleMenu(args, 1)
             .Add("GetAll", () => restService.Get<Order>("order").ToConsole("Orders"))
             .Add("Get", () => restService.Get<Order>(ReadInt(), "order").ToConsole("Order"))
-            .Add("Create", () => restService.Post(createObject<Order>(false), "order"))
-            .Add("Update", () => restService.Put(createObject<Order>(true), "order"))
+            .Add("Create", () => restService.Post(CreateObject<Order>(false), "order"))
+            .Add("Update", () => restService.Put(CreateObject<Order>(true), "order"))
             .Add("Delete", () => restService.Delete(ReadInt(), "order"))
             .Add("Back", ConsoleMenu.Close)
             .Configure(config =>
@@ -79,12 +77,32 @@ namespace ZRO06A_HFT_2021221.Client
                config.EnableBreadcrumb = true;
                config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
             });
+         
+         ConsoleMenu statMenu = new ConsoleMenu(args, 1)
+            .Add("Cars average price", () => restService.GetSingle<double>( "stat/CarAveragePrice").ToConsole("Cars average price"))
+            .Add("Sum sold cars", () => restService.GetSingle<double>( "stat/SumSoldCarPrices").ToConsole("Sum sold cars"))
+            .Add("Count sold cars", () => restService.GetSingle<double>( "stat/CountSoldCars").ToConsole("Count sold cars"))
+            .Add("Count sold cars by brands", () => restService.Get<KeyValuePair<string, double>>( "stat/CountSoldCarsByBrand").ToConsole("Count sold cars by brands"))
+            .Add("Cars average price by brands", () => restService.Get<KeyValuePair<string, double>>( "stat/CarAveragePriceByBrands").ToConsole("Cars average price by brands"))
+            .Add("Customer paid sum", () => restService.Get<double>(ReadInt(), "stat/CustomerPaidSum").ToConsole("Customer paid sum"))
+            .Add("Customer last order", () => restService.Get<Order>(ReadInt(), "stat/CustomerLastOrder").ToConsole("Customer last order"))
+            
+            .Add("Back", ConsoleMenu.Close)
+            .Configure(config =>
+            {
+               config.Selector = "--> ";
+               config.EnableFilter = true;
+               config.Title = "Orders";
+               config.EnableBreadcrumb = true;
+               config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
+            });
 
-         var menu = new ConsoleMenu(args, level: 0)
+         ConsoleMenu menu = new ConsoleMenu(args, 0)
             .Add("Cars", carMenu.Show)
             .Add("Brands", brandMenu.Show)
             .Add("Customers", customerMenu.Show)
             .Add("Orders", orderMenu.Show)
+            .Add("Stats", statMenu.Show)
             .Add("Exit", () => Environment.Exit(0))
             .Configure(config =>
             {
@@ -98,25 +116,30 @@ namespace ZRO06A_HFT_2021221.Client
          menu.Show();
       }
 
-      private static T createObject<T>(bool createId)
+      private static T CreateObject<T>(bool createId)
       {
          Type t = typeof(T);
-         var props = t.GetProperties();
-            var obj = Activator.CreateInstance(t);
-            foreach (var prop in props)
-            {
-               if (!createId && prop.Name.ToUpper() == "ID") continue;
-               
-               var p = t.GetProperty(prop.Name);
-               if (Attribute.IsDefined(p, typeof(NotMappedAttribute))) continue;
+         PropertyInfo[] props = t.GetProperties();
+         object obj = Activator.CreateInstance(t);
+         
+         Console.Clear();
+         Console.WriteLine($"Create {nameof(obj)}");
+         foreach (PropertyInfo prop in props)
+         {
+            if (!createId && prop.Name.ToUpper() == "ID") continue;
 
-               Console.WriteLine($"{prop.Name}: ");
-               var value = Console.ReadLine();
-               
-               p.SetValue(obj, Convert.ChangeType(value, p.PropertyType), null);
-            }
+            PropertyInfo p = t.GetProperty(prop.Name);
+            if (Attribute.IsDefined(p, typeof(NotMappedAttribute))) continue;
 
-            return (T)obj;
+            Console.WriteLine($"{prop.Name}: ");
+            string value = Console.ReadLine();
+            
+            if (value == string.Empty) continue;
+            
+            p.SetValue(obj, Convert.ChangeType(value, p.PropertyType), null);
+         }
+
+         return (T)obj;
       }
 
       private static int ReadInt(string str = "ID")
@@ -127,8 +150,9 @@ namespace ZRO06A_HFT_2021221.Client
 
       private static void ToConsole<T>(this T input, string str = "")
       {
+         Console.Clear();
          Console.WriteLine("*** BEGIN " + str);
-         JsonSerializerOptions serializerOptions = new JsonSerializerOptions { WriteIndented = true };
+         var serializerOptions = new JsonSerializerOptions { WriteIndented = true };
          Console.WriteLine(JsonSerializer.Serialize(
             input,
             serializerOptions)
