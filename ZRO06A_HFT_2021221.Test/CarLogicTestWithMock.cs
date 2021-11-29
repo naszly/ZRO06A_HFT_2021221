@@ -33,30 +33,35 @@ namespace ZRO06A_HFT_2021221.Test
             {
                new()
                {
+                  Id = 1,
                   Model = "A3",
                   BasePrice = 2000,
                   Brand = fakeBrand1
                },
                new()
                {
+                  Id = 2,
                   Model = "A5",
                   BasePrice = 3000,
                   Brand = fakeBrand1
                },
                new()
                {
+                  Id = 3,
                   Model = "A6",
                   BasePrice = 3400,
                   Brand = fakeBrand1
                },
                new()
                {
+                  Id = 4,
                   Model = "100",
                   BasePrice = 1100,
                   Brand = fakeBrand2
                },
                new()
                {
+                  Id = 5,
                   Model = "200",
                   BasePrice = 1500,
                   Brand = fakeBrand2
