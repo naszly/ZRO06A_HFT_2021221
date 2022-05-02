@@ -28,10 +28,10 @@ namespace ZRO06A_HFT_2021221.Logic
             {
                 if (item.BrandId == 0 && item.Brand.Id > 0)
                     item.BrandId = item.Brand.Id;
-                item.Brand = null;
+                //item.Brand = null;
             }
 
-            repository.Create(item);
+            repository.Create(item.GetCopy());
         }
 
         public void Delete(int id)

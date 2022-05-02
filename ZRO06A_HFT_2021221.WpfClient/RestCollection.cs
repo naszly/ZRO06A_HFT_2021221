@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,6 +16,7 @@ namespace ZRO06A_HFT_2021221.WpfClient
     public class RestService
     {
         private HttpClient client;
+        JsonMediaTypeFormatter jsonformatter;
 
         public RestService(string baseurl, string pingableEndpoint = "swagger")
         {
@@ -22,6 +25,10 @@ namespace ZRO06A_HFT_2021221.WpfClient
             {
                 isOk = Ping(baseurl + pingableEndpoint);
             } while (isOk == false);
+
+            jsonformatter = new JsonMediaTypeFormatter();
+            jsonformatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
             Init(baseurl);
         }
 
@@ -55,7 +62,6 @@ namespace ZRO06A_HFT_2021221.WpfClient
             {
                 throw new ArgumentException("Endpoint is not available!");
             }
-
         }
 
         public async Task<List<T>> GetAsync<T>(string endpoint)
@@ -157,7 +163,7 @@ namespace ZRO06A_HFT_2021221.WpfClient
         public async Task PostAsync<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
-                await client.PostAsJsonAsync(endpoint, item);
+                await client.PostAsync(endpoint, item, jsonformatter);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -170,7 +176,7 @@ namespace ZRO06A_HFT_2021221.WpfClient
         public void Post<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
-                client.PostAsJsonAsync(endpoint, item).GetAwaiter().GetResult();
+                client.PostAsync(endpoint, item, jsonformatter).GetAwaiter().GetResult();
 
             if (!response.IsSuccessStatusCode)
             {
@@ -211,7 +217,7 @@ namespace ZRO06A_HFT_2021221.WpfClient
         public async Task PutAsync<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
-                await client.PutAsJsonAsync(endpoint, item);
+                await client.PutAsync(endpoint, item, jsonformatter);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -225,7 +231,7 @@ namespace ZRO06A_HFT_2021221.WpfClient
         public void Put<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
-                client.PutAsJsonAsync(endpoint, item).GetAwaiter().GetResult();
+                client.PutAsync(endpoint, item, jsonformatter).GetAwaiter().GetResult();
 
             if (!response.IsSuccessStatusCode)
             {
@@ -409,8 +415,6 @@ namespace ZRO06A_HFT_2021221.WpfClient
             }
 
         }
-
-
     }
 }
 

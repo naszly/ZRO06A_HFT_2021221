@@ -76,25 +76,25 @@ namespace ZRO06A_HFT_2021221.WpfClient
         {
             if (!IsInDesignMode)
             {
-                Brands = new RestCollection<Brand>("http://localhost:62730/", "brand");
-                Cars = new RestCollection<Car>("http://localhost:62730/", "car");
-                Customers = new RestCollection<Customer>("http://localhost:62730/", "customer");
-                Orders = new RestCollection<Order>("http://localhost:62730/", "order");
+                Brands = new RestCollection<Brand>("http://localhost:62730/", "brand", "hub");
+                Cars = new RestCollection<Car>("http://localhost:62730/", "car", "hub");
+                Customers = new RestCollection<Customer>("http://localhost:62730/", "customer", "hub");
+                Orders = new RestCollection<Order>("http://localhost:62730/", "order", "hub");
 
                 CreateCarCommand = new RelayCommand(CreateCar);
-                DeleteCarCommand = new RelayCommand(() => Cars.Delete(SelectedCar.Id),
+                DeleteCarCommand = new RelayCommand(DeleteCar,
                                                     () => SelectedCar != null && SelectedCar.Orders.Count == 0);
                 UpdateCarCommand = new RelayCommand(UpdateCar,
                                                     () => SelectedCar != null);
 
                 CreateCustomerCommand = new RelayCommand(CreateCustomer);
-                DeleteCustomerCommand = new RelayCommand(() => Customers.Delete(SelectedCustomer.Id),
+                DeleteCustomerCommand = new RelayCommand(DeleteCustomer ,
                                                          () => SelectedCustomer != null && SelectedCustomer.Orders.Count == 0);
                 UpdateCustomerCommand = new RelayCommand(UpdateCustomer,
                                                          () => SelectedCustomer != null);
 
                 CreateOrderCommand = new RelayCommand(CreateOrder);
-                DeleteOrderCommand = new RelayCommand(() => Orders.Delete(SelectedOrder.Id),
+                DeleteOrderCommand = new RelayCommand(DeleteOrder,
                                                       () => SelectedOrder != null);
                 UpdateOrderCommand = new RelayCommand(UpdateOrder,
                                                       () => SelectedOrder != null);
@@ -110,6 +110,11 @@ namespace ZRO06A_HFT_2021221.WpfClient
             {
                 Cars.Add(car);
             }
+        }
+
+        public void DeleteCar()
+        {
+            Cars.Delete(SelectedCar.Id);
         }
 
         public void UpdateCar()
@@ -132,6 +137,11 @@ namespace ZRO06A_HFT_2021221.WpfClient
             }
         }
 
+        public void DeleteCustomer()
+        {
+            Customers.Delete(SelectedCustomer.Id);
+        }
+
         public void UpdateCustomer()
         {
             Customer customer = selectedCustomer.GetCopy();
@@ -150,6 +160,11 @@ namespace ZRO06A_HFT_2021221.WpfClient
             {
                 Orders.Add(order);
             }
+        }
+
+        public void DeleteOrder()
+        {
+            Orders.Delete(SelectedOrder.Id);
         }
 
         public void UpdateOrder()

@@ -23,17 +23,17 @@ namespace ZRO06A_HFT_2021221.Logic
             {
                 if (item.CustomerId == 0 && item.Customer.Id > 0)
                     item.CustomerId = item.Customer.Id;
-                item.Customer = null;
+                //item.Customer = null;
             }
 
             if (item.Car != null)
             {
                 if (item.CarId == 0 && item.Car.Id > 0)
                     item.CarId = item.Car.Id;
-                item.Car = null;
+                //item.Car = null;
             }
 
-            repository.Create(item);
+            repository.Create(item.GetCopy());
         }
 
         public void Delete(int id)
