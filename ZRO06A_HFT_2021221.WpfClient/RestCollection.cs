@@ -11,7 +11,7 @@ using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ZRO06A_HFT_2021221.WpfClient
+namespace ZRO06A_HFT_2021221.WPFClient
 {
     public class RestService
     {

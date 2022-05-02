@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ZRO06A_HFT_2021221.Models;
 
-namespace ZRO06A_HFT_2021221.WpfClient
+namespace ZRO06A_HFT_2021221.WPFClient
 {
     /// <summary>
     /// Interaction logic for EditCustomerWindow.xaml
