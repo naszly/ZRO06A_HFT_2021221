@@ -1,0 +1,23 @@
+﻿<Window x:Class="ZRO06A_HFT_2021221.WpfClient.EditCustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZRO06A_HFT_2021221.WpfClient"
+        mc:Ignorable="d"
+        Title="EditCustomerWindow" Height="400" Width="250">
+    <Window.DataContext>
+        <local:EditCustomerWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Label Content="Name"/>
+            <TextBox Text="{Binding Customer.Name}"/>
+        </StackPanel>
+        <Button Grid.Row="1" Content="Ok" Click="Button_Click"/>
+    </Grid>
+</Window>

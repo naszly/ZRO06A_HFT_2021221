@@ -1,0 +1,94 @@
+﻿<Window x:Class="ZRO06A_HFT_2021221.WpfClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZRO06A_HFT_2021221.WpfClient"
+        mc:Ignorable="d"
+        Title="Editor" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Car" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Cars}" SelectedItem="{Binding SelectedCar}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Label Content="{Binding Brand.Name}"/>
+                        <Label Content="{Binding Model}"/>
+                        <Label Content="{Binding BasePrice}"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Create" Command="{Binding CreateCarCommand}"/>
+            <Button Grid.Column="1" Content="Delete" Command="{Binding DeleteCarCommand}"/>
+            <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCarCommand}"/>
+        </Grid>
+
+        <Label Grid.Row="0" Grid.Column="1" Content="Customer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Label Content="{Binding Name}"/>
+                        <Label Content="{Binding Orders.Count}"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Create" Command="{Binding CreateCustomerCommand}"/>
+            <Button Grid.Column="1" Content="Delete" Command="{Binding DeleteCustomerCommand}"/>
+            <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCustomerCommand}"/>
+        </Grid>
+
+        <Label Grid.Row="0" Grid.Column="2" Content="Order" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Label Content="{Binding Customer.Name}"/>
+                        <Label Content="{Binding Car.Brand.Name}"/>
+                        <Label Content="{Binding Car.Model}"/>
+                        <Label Content="{Binding Price}"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="2" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Create" Command="{Binding CreateOrderCommand}"/>
+            <Button Grid.Column="1" Content="Delete" Command="{Binding DeleteOrderCommand}"/>
+            <Button Grid.Column="2" Content="Update" Command="{Binding UpdateOrderCommand}"/>
+        </Grid>
+        
+    </Grid>
+</Window>

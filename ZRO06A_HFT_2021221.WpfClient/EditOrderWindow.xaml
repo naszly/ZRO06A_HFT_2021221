@@ -1,0 +1,45 @@
+﻿<Window x:Class="ZRO06A_HFT_2021221.WpfClient.EditOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZRO06A_HFT_2021221.WpfClient"
+        mc:Ignorable="d"
+        Title="EditOrderWindow" Height="400" Width="250">
+    <Window.DataContext>
+        <local:EditOrderWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Label Content="Date"/>
+            <DatePicker Text="{Binding Order.Date}"/>
+            <Label Content="Price"/>
+            <TextBox Text="{Binding Order.Price}"/>
+            <Label Content="Car"/>
+            <ListView ItemsSource="{Binding Cars}" SelectedItem="{Binding SelectedCar}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <Label Content="{Binding Brand.Name}"/>
+                            <Label Content="{Binding Model}"/>
+                            <Label Content="{Binding BasePrice}"/>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label Content="Customer"/>
+            <ListView ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <Button Grid.Row="1" Content="Ok" Click="Button_Click"/>
+    </Grid>
+</Window>
