@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -10,7 +11,6 @@ namespace ZRO06A_HFT_2021221.WpfClient
 {
     internal class MainWindowViewModel : ObservableRecipient
     {
-        public RestCollection<Brand> Brands { get; set; }
         public RestCollection<Car> Cars { get; set; }
         public RestCollection<Customer> Customers { get; set; }
         public RestCollection<Order> Orders { get; set; }
@@ -76,105 +76,30 @@ namespace ZRO06A_HFT_2021221.WpfClient
         {
             if (!IsInDesignMode)
             {
-                Brands = new RestCollection<Brand>("http://localhost:62730/", "brand", "hub");
-                Cars = new RestCollection<Car>("http://localhost:62730/", "car", "hub");
-                Customers = new RestCollection<Customer>("http://localhost:62730/", "customer", "hub");
-                Orders = new RestCollection<Order>("http://localhost:62730/", "order", "hub");
+                MainWindowLogic logic = new MainWindowLogic();
 
-                CreateCarCommand = new RelayCommand(CreateCar);
-                DeleteCarCommand = new RelayCommand(DeleteCar,
+                (Cars, Customers, Orders) = logic.GetCollections();
+                
+                CreateCarCommand = new RelayCommand(logic.CreateCar);
+                DeleteCarCommand = new RelayCommand(() => logic.DeleteCar(SelectedCar),
                                                     () => SelectedCar != null && SelectedCar.Orders.Count == 0);
-                UpdateCarCommand = new RelayCommand(UpdateCar,
+                UpdateCarCommand = new RelayCommand(() => logic.UpdateCar(SelectedCar),
                                                     () => SelectedCar != null);
 
-                CreateCustomerCommand = new RelayCommand(CreateCustomer);
-                DeleteCustomerCommand = new RelayCommand(DeleteCustomer ,
+                CreateCustomerCommand = new RelayCommand(logic.CreateCustomer);
+                DeleteCustomerCommand = new RelayCommand(() => logic.DeleteCustomer(SelectedCustomer),
                                                          () => SelectedCustomer != null && SelectedCustomer.Orders.Count == 0);
-                UpdateCustomerCommand = new RelayCommand(UpdateCustomer,
+                UpdateCustomerCommand = new RelayCommand(() => logic.UpdateCustomer(SelectedCustomer),
                                                          () => SelectedCustomer != null);
 
-                CreateOrderCommand = new RelayCommand(CreateOrder);
-                DeleteOrderCommand = new RelayCommand(DeleteOrder,
+                CreateOrderCommand = new RelayCommand(logic.CreateOrder);
+                DeleteOrderCommand = new RelayCommand(() => logic.DeleteOrder(SelectedOrder),
                                                       () => SelectedOrder != null);
-                UpdateOrderCommand = new RelayCommand(UpdateOrder,
+                UpdateOrderCommand = new RelayCommand(() => logic.UpdateOrder(SelectedOrder),
                                                       () => SelectedOrder != null);
 
             }
         }
 
-        public void CreateCar()
-        {
-            Car car = new Car();
-            EditCarWindow window = new EditCarWindow(car, Brands.ToList());
-            if (window.ShowDialog() == true)
-            {
-                Cars.Add(car);
-            }
-        }
-
-        public void DeleteCar()
-        {
-            Cars.Delete(SelectedCar.Id);
-        }
-
-        public void UpdateCar()
-        {
-            Car car = selectedCar.GetCopy();
-            EditCarWindow window = new EditCarWindow(car, Brands.ToList());
-            if (window.ShowDialog() == true)
-            {
-                Cars.Update(car);
-            }
-        }
-
-        public void CreateCustomer()
-        {
-            Customer customer = new Customer();
-            EditCustomerWindow window = new EditCustomerWindow(customer);
-            if (window.ShowDialog() == true)
-            {
-                Customers.Add(customer);
-            }
-        }
-
-        public void DeleteCustomer()
-        {
-            Customers.Delete(SelectedCustomer.Id);
-        }
-
-        public void UpdateCustomer()
-        {
-            Customer customer = selectedCustomer.GetCopy();
-            EditCustomerWindow window = new EditCustomerWindow(customer);
-            if (window.ShowDialog() == true)
-            {
-                Customers.Update(customer);
-            }
-        }
-
-        public void CreateOrder()
-        {
-            Order order = new Order();
-            EditOrderWindow window = new EditOrderWindow(order, Customers.ToList(), Cars.ToList());
-            if (window.ShowDialog() == true)
-            {
-                Orders.Add(order);
-            }
-        }
-
-        public void DeleteOrder()
-        {
-            Orders.Delete(SelectedOrder.Id);
-        }
-
-        public void UpdateOrder()
-        {
-            Order order = selectedOrder.GetCopy();
-            EditOrderWindow window = new EditOrderWindow(order, Customers.ToList(), Cars.ToList());
-            if (window.ShowDialog() == true)
-            {
-                Orders.Update(order);
-            }
-        }
     }
 }
