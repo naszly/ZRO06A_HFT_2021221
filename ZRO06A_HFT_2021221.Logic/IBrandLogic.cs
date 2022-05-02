@@ -2,5 +2,5 @@ using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Logic
 {
-   public interface IBrandLogic : ILogic<Brand> { }
+    public interface IBrandLogic : ILogic<Brand> { }
 }

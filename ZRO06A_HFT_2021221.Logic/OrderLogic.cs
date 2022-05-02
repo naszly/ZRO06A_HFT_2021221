@@ -5,50 +5,64 @@ using ZRO06A_HFT_2021221.Repository;
 
 namespace ZRO06A_HFT_2021221.Logic
 {
-   public class OrderLogic : IOrderLogic
-   {
-      private readonly IOrderRepository repository;
+    public class OrderLogic : IOrderLogic
+    {
+        private readonly IOrderRepository repository;
 
-      public OrderLogic(IOrderRepository repository)
-      {
-         this.repository = repository;
-      }
+        public OrderLogic(IOrderRepository repository)
+        {
+            this.repository = repository;
+        }
 
-      public void Create(Order item)
-      {
-         if (item is null)
-            throw new ArgumentNullException(nameof(item));
+        public void Create(Order item)
+        {
+            if (item is null)
+                throw new ArgumentNullException(nameof(item));
 
-         repository.Create(item);
-      }
+            if (item.Customer != null)
+            {
+                if (item.CustomerId == 0 && item.Customer.Id > 0)
+                    item.CustomerId = item.Customer.Id;
+                item.Customer = null;
+            }
 
-      public void Delete(int id)
-      {
-         repository.Delete(id);
-      }
+            if (item.Car != null)
+            {
+                if (item.CarId == 0 && item.Car.Id > 0)
+                    item.CarId = item.Car.Id;
+                item.Car = null;
+            }
 
-      public Order GetOne(int id)
-      {
-         Order item = repository.GetOne(id);
-         if (item is null)
-            throw new KeyNotFoundException("Cannot get order with id: " + id);
+            repository.Create(item);
+        }
 
-         return item;
-      }
+        public void Delete(int id)
+        {
+            repository.Delete(id);
+        }
 
-      public IEnumerable<Order> GetAll()
-      {
-         return repository.GetAll();
-      }
+        public Order GetOne(int id)
+        {
+            Order item = repository.GetOne(id);
+            if (item is null)
+                throw new KeyNotFoundException("Cannot get order with id: " + id);
 
-      public void Update(Order item)
-      {
-         if (item is null)
-            throw new ArgumentNullException(nameof(item));
-         if (repository.GetOne(item.Id) is null)
-            throw new KeyNotFoundException("Cannot get order with id: " + item.Id);
+            return item;
+        }
 
-         repository.Update(item);
-      }
-   }
+        public IEnumerable<Order> GetAll()
+        {
+            return repository.GetAll();
+        }
+
+        public void Update(Order item)
+        {
+            if (item is null)
+                throw new ArgumentNullException(nameof(item));
+            if (repository.GetOne(item.Id) is null)
+                throw new KeyNotFoundException("Cannot get order with id: " + item.Id);
+
+            repository.Update(item);
+        }
+    }
 }

@@ -1,10 +1,10 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using System;
 using ZRO06A_HFT_2021221.Data;
 using ZRO06A_HFT_2021221.Logic;
 using ZRO06A_HFT_2021221.Repository;
@@ -55,8 +55,8 @@ namespace ZRO06A_HFT_2021221.Endpoint
 
             app.UseEndpoints(endpoints =>
             {
-             //endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
-             endpoints.MapControllers();
+                //endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+                endpoints.MapControllers();
             });
         }
     }

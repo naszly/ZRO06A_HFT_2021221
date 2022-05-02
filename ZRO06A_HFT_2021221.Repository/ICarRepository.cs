@@ -2,8 +2,8 @@ using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.Repository
 {
-   public interface ICarRepository : IRepository<Car>
-   {
-      void ChangePrice(int id, int newPrice);
-   }
+    public interface ICarRepository : IRepository<Car>
+    {
+        void ChangePrice(int id, int newPrice);
+    }
 }
