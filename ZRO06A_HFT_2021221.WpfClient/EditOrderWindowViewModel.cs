@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,9 @@ using ZRO06A_HFT_2021221.Models;
 
 namespace ZRO06A_HFT_2021221.WpfClient
 {
-    internal class EditOrderWindowViewModel
+    internal class EditOrderWindowViewModel : ObservableRecipient
     {
+
         public EditOrderWindowViewModel()
         {
             Order = new Order();
@@ -23,7 +25,32 @@ namespace ZRO06A_HFT_2021221.WpfClient
             SelectedCar = cars?.SingleOrDefault((x) => x.Id == order.CarId);
         }
 
-        public Order Order { get; private set; }
+        private Order Order { get; set; }
+
+        public DateTime Date
+        {
+            get
+            {
+                if (Order.Date == default)
+                    Order.Date = DateTime.Now;
+                return Order.Date;
+            }
+            set
+            {
+                Order.Date = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int Price
+        {
+            get => Order.Price;
+            set
+            {
+                Order.Price = value;
+                OnPropertyChanged();
+            }
+        }
 
         public IReadOnlyList<Customer>? Customers { get; }
         public Customer? SelectedCustomer
@@ -43,7 +70,11 @@ namespace ZRO06A_HFT_2021221.WpfClient
             set
             {
                 Order.Car = value;
-                if (Order.Car != null) Order.CarId = Order.Car.Id;
+                if (Order.Car != null)
+                {
+                    Order.CarId = Order.Car.Id;
+                    Price = Order.Car.BasePrice;
+                }
             }
         }
     }

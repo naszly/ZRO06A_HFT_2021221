@@ -22,13 +22,13 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Car" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Cars}" SelectedItem="{Binding SelectedCar}">
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Cars, Mode=OneWay}" SelectedItem="{Binding SelectedCar}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <Label Content="{Binding Brand.Name}"/>
-                        <Label Content="{Binding Model}"/>
-                        <Label Content="{Binding BasePrice}"/>
+                        <Label Content="{Binding Brand.Name, Mode=OneWay}"/>
+                        <Label Content="{Binding Model, Mode=OneWay}"/>
+                        <Label Content="{Binding BasePrice, Mode=OneWay}"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -45,12 +45,12 @@
         </Grid>
 
         <Label Grid.Row="0" Grid.Column="1" Content="Customer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}">
+        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Customers, Mode=OneWay}" SelectedItem="{Binding SelectedCustomer}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <Label Content="{Binding Name}"/>
-                        <Label Content="{Binding Orders.Count}"/>
+                        <Label Content="{Binding Name, Mode=OneWay}"/>
+                        <Label Content="{Binding Orders.Count, Mode=OneWay}"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -67,14 +67,14 @@
         </Grid>
 
         <Label Grid.Row="0" Grid.Column="2" Content="Order" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}">
+        <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Orders, Mode=OneWay}" SelectedItem="{Binding SelectedOrder}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <Label Content="{Binding Customer.Name}"/>
-                        <Label Content="{Binding Car.Brand.Name}"/>
-                        <Label Content="{Binding Car.Model}"/>
-                        <Label Content="{Binding Price}"/>
+                        <Label Content="{Binding Customer.Name, Mode=OneWay}"/>
+                        <Label Content="{Binding Car.Brand.Name, Mode=OneWay}"/>
+                        <Label Content="{Binding Car.Model, Mode=OneWay}"/>
+                        <Label Content="{Binding Price, Mode=OneWay}"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
