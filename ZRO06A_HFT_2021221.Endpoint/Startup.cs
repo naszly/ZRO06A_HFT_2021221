@@ -57,6 +57,12 @@ namespace ZRO06A_HFT_2021221.Endpoint
                 app.UseExceptionHandler("/error");
             }
 
+            app.UseCors(x => x
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("http://localhost:19323"));
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

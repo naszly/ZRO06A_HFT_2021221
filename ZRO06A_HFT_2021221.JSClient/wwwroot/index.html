@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <div>
+        <label for="model">Model:</label><br>
+        <input type="text" id="model" name="model"><br>
+        <label for="price">Base price:</label><br>
+        <input type="text" id="price" name="price"><br>
+        <label for="brand">Brand:</label><br>
+        <select id="brand" name="brand">
+            <option value="0">Select a brand</option>
+        </select><br>
+        <button type="button" id="create_car">Create</button>
+        <button type="button" id="update_car">Update</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Base Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="result"></tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
