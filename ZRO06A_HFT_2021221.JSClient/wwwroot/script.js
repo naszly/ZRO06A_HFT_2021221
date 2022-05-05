@@ -8,7 +8,8 @@
 
     let createBttn = document.getElementById("create_car");
     let updateBttn = document.getElementById("update_car");
-    let table = document.getElementById("result");
+    let table = document.getElementById("table");
+    let result = document.getElementById("result");
 
     let selectedCar;
 
@@ -64,7 +65,7 @@
     }
 
     function displayTable() {
-        table.innerHTML = "";
+        result.innerHTML = "";
         for (var i = 0; i < cars.length; i++) {
             let row = document.createElement("tr");
             let id = cars[i].id;
@@ -84,7 +85,7 @@
             row.innerHTML = `<td>${cars[i].id}</td><td>${cars[i].brand.name}</td><td>${cars[i].model}</td><td>${cars[i].basePrice}</td>`
             row.appendChild(td);
 
-            table.appendChild(row);
+            result.appendChild(row);
         }
     }
 

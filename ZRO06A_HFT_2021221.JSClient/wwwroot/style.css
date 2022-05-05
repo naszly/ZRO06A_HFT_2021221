@@ -1,2 +1,43 @@
-﻿body {
+﻿table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 20px;
+    padding: 1.1em;
+    position: relative;
+    text-align: center;
+}
+
+table, th, td {
+    border: 2px solid black;
+}
+
+th, td {
+    padding: 5px;
+}
+
+th {
+    background-color: floralwhite;
+}
+
+html, body {
+    font-family: Calibri;
+}
+
+#form {
+    margin: auto;
+    padding: 1.1em;
+    position: relative;
+    text-align: center;
+    width: 90%;
+    background-color: floralwhite;
+    border: 2px solid black;
+    border-radius: 1em;
+}
+
+input, select, button {
+    width: 100%;
+    margin: .5em 0;
+    padding: .3em;
+    box-sizing: border-box;
 }
